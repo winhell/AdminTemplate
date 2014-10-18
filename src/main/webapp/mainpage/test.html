@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/plugins/select2/select2.css">
+    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/select2/select2_locale_zh-CN.js" type="text/javascript"></script>
+    <script src="assets/scripts/user/jquery.ajaxselect.js"></script>
+
+</head>
+<body>
+    <select id="myList">
+        <option></option>
+        <option value="1">hwh</option>
+        <option value="2">lcq</option>
+    </select>
+
+    <select id="userList" data-options="url:'estate/listCity.action?city=0',defaultText:'所在地'" name="userList">
+    </select>
+   <script>
+        $('#myList').select2({placeholder:'hello',width:230});
+       $('#userList').ajaxselect().select2({width:230});
+    </script>
+</body>
+</html>

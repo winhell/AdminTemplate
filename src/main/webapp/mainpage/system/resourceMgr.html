@@ -1,0 +1,135 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+            菜单管理
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                首页
+                <i class="fa fa-angle-right"></i>
+                资源管理
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>资源列表
+                </div>
+                <div class="actions">
+                    <a href="#" class="btn blue" id="addLink"><i class="fa fa-plus"></i> 增加</a>
+                    <a href="#" class="btn yellow" id="editLink">
+                        <i class="fa fa-pencil"></i>
+                        编辑
+                    </a>
+                    <a href="javascript:;" class="btn red" id="deleteLink">
+                        <i class="fa fa-trash-o"></i>
+                        删除
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+
+                <table class="datatable table table-striped table-bordered table-hover" data-url="system/getAllResources.action" id="gridtable">
+                    <thead>
+                    <tr>
+                        <th data-options="data:'id',render:checkboxRender" style="width:20px;">
+                            <input type="checkbox" class="group-checkable">
+                        </th>
+                        <th data-options="data:'url'">url</th>
+                        <th data-options="data:'comment'">资源说明</th>
+                        <th data-options="data:'showOrder'">执行顺序</th>
+                        <th data-options="data:'id',render:resourceMgr.assignRender">指派角色</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<div id="additemFormDiv" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-reorder"></i><span id="formTitle">Form Actions On Bottom</span>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form class="form-horizontal" id="additemForm" data-path="system" data-func="resource" method="post">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label for="url" class="col-md-3 control-label">url</label>
+                                <div class="col-md-8">
+                                    <input id='url' type="text" name="url" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">资源说明</label>
+                                <div class="col-md-8">
+                                    <input id='comment' type="text" class="form-control" name="comment" placeholder="菜单说明">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">权限判断顺序</label>
+                                <div class="col-md-8">
+                                    <input id='showOrder' type="text" class="form-control" name="showOrder"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn blue" id="formSubmit">提交</button>
+                                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="assignRolesDiv" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-reorder"></i>指定角色
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+
+                        <div class="row">
+                            <div class="col-md-11 checkbox-list">
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn blue" id="assignButton">分配角色</button>
+                                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/resourceMgr.js"></script>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="943674272">
+    <data-source source="LOCAL" name="MySQL - projmgrdb@localhost" uuid="65d26b3e-00f7-4782-8837-654fc688e7b0">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/projmgrdb</jdbc-url>
+      <user-name>hwh</user-name>
+      <user-password>dfc2dfdddfc2df9bdf98df99df9edf9fdf9c</user-password>
+      <schema-pattern>projmgrdb.*</schema-pattern>
+      <default-schemas>projmgrdb.*</default-schemas>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

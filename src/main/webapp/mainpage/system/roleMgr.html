@@ -1,0 +1,120 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+            用户角色管理
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                    首页
+                <i class="fa fa-angle-right"></i>
+                用户角色管理
+            </li>
+            <li>
+                <a href="#">
+                </a>
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>角色列表
+                </div>
+                <div class="actions">
+                    <a href="javascript:;" class="btn blue" id="addLink"><i class="fa fa-plus"></i> 增加</a>
+                    <a href="javascript:;" class="btn yellow" id="editLink">
+                        <i class="fa fa-pencil"></i>
+                        编辑
+                    </a>
+                    <a href="javascript:;" class="btn red" id="deleteLink">
+                        <i class="fa fa-trash-o"></i>
+                        删除
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="datatable table table-striped table-bordered table-hover table-condensedt" data-url="system/getAllRoles.action" id="gridtable">
+                    <thead>
+                    <tr>
+                        <th data-options="data:'id',render:checkboxRender" style="width:20px;">
+                            <input type="checkbox" class="group-checkable">
+                        </th>
+                        <th data-options="data:'name'">角色名</th>
+                        <th data-options="data:'createtime'">创建时间</th>
+                        <th data-options="data:'comment'">角色说明</th>
+                        <th data-options="data:'id',render:roleMgr.assignRender">权限分配</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<div id="additemFormDiv" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-reorder"></i><span id="formTitle">Form Actions On Bottom</span>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form class="form-horizontal" id="additemForm" data-path="system" data-func="role" method="post">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">角色名</label>
+                                <div class="col-md-8">
+                                    <input id='name' type="text" name="name" class="form-control" placeholder="角色名"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">角色说明</label>
+                                <div class="col-md-8">
+                                    <input id='comment' type="text" class="form-control" name="comment" placeholder="角色说明">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn blue" id="formSubmit">提交</button>
+                                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="assignMenuDiv" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">角色权限分配</h4>
+            </div>
+            <div class="modal-body">
+                <div id="menutree"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                <button class="btn yellow" id="assignButton">分配</button>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="../assets/global/plugins/jstree/dist/themes/default/style.min.css" type="text/css"/>
+<script type="text/javascript" src="../assets/global/plugins/jstree/dist/jstree.min.js"></script>
+<script type="text/javascript" src="js/roleMgr.js"></script>

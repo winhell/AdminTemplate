@@ -1,0 +1,187 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+            项目管理
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                首页
+                <i class="fa fa-angle-right"></i>
+                项目管理
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>项目列表
+                </div>
+                <div class="actions">
+                    <a href="#" class="btn btn-default btn-sm" id="addLink">
+                        <i class="fa fa-plus"></i> 增加项目 </a>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="#" data-toggle="dropdown">
+                            <i class="fa fa-cogs"></i> 其它操作 <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="#" id="editLink">
+                                    <i class="fa fa-pencil"></i> 修改 </a>
+                            </li>
+                            <li>
+                                <a href="#" id="deleteLink">
+                                    <i class="fa fa-trash-o"></i> 删除 </a>
+                            </li>
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <a href="#" id="importExcel">
+                                    <i class="fa fa-plus"></i> 导入数据 </a>
+                            </li>
+                            <li>
+                            <a href="#" id="importZip">
+                                <i class="fa fa-plus"></i> 批量导入论文 </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+            <div class="portlet-body">
+                <div class="form display-hide" id="uploadForm">
+                    <form name="form" action="" method="POST" enctype="multipart/form-data" id="theUpload">
+                    <div class="form-group">
+                        <label class="control-label col-md-1">选择文件</label>
+                        <div class="col-md-6">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="input-group">
+                                    <div class="form-control uneditable-input span3" data-trigger="fileinput">
+                                        <i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename">
+														</span>
+                                    </div>
+													<span class="input-group-addon btn default btn-file">
+													<span class="fileinput-new">
+													选择文件</span>
+													<span class="fileinput-exists">
+													修改</span>
+													<input type="file" name="uploadFile" id="uploadFile">
+													</span>
+                                    <a href="#" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">
+                                        取消</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn green" id="uploadBtn">上传</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <table class="datatable table table-striped table-bordered table-hover" data-url="projmgr/getProjectsList.action" id="gridtable">
+                    <thead>
+                    <tr>
+                        <th data-options="mData:'id',mRender:databaseUtil.checkboxRender" style="width:20px;">
+                            <input type="checkbox" class="group-checkable" data-set="#gridtable .checkboxes"/>
+                        </th>
+                        <th data-options="mData:'name'">项目名称</th>
+                        <th data-options="mData:'owner'">项目负责人</th>
+                        <th data-options="mData:'projYear'">立项年份</th>
+                        <th data-options="mData:'depart'">所在单位</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="additemFormDiv" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-reorder"></i><span id="formTitle">Form Actions On Bottom</span>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form class="form-horizontal" id="additemForm" data-path="projmgr" data-func="project" method="post">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">项目名称</label>
+                                <div class="col-md-8">
+                                    <input id='name' type="text" name="name"  class="form-control" placeholder="项目名称"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">所属单位</label>
+                                <div class="col-md-8">
+                                    <input id='depart' type="text" class="form-control" name="depart" placeholder="所属单位">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">项目编号</label>
+                                <div class="col-md-8">
+                                    <input id='registerId' type="text" class="form-control" name="registerId" placeholder="项目编号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">项目负责人</label>
+                                <div class="col-md-8">
+                                    <input id='owner' type="text" class="form-control" name="owner" placeholder="项目负责人">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">项目经费</label>
+                                <div class="col-md-8">
+                                    <input id='fee' type="text" class="form-control" name="fee" placeholder="项目经费">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="projectType" class="col-md-3 control-label">项目类型</label>
+                                <div class="col-md-8">
+                                    <select id='projectType' name="projectType" class="form-control ajaxselect" data-options="url:'system/getCodeList.action?type=projectType',defaultText:'项目类型'">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="departType" class="col-md-3 control-label">单位类别</label>
+                                <div class="col-md-8">
+                                    <select id='departType' name="departType" class="form-control ajaxselect" data-options="url:'system/getCodeList.action?type=departType',defaultText:'单位类别'">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn blue" id="formSubmit">提交</button>
+                                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<link rel="stylesheet" href="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
+<script type="text/javascript" src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../assets/global/scripts/jquery.datatable.manager.js"></script>
+<script type="text/javascript" src="../assets/global/scripts/jquery.form.js"></script>
+<script type="text/javascript" src="../assets/global/plugins/ajaxupload/ajaxfileupload.js"></script>
+<script type="text/javascript" src="js/projMgr.js"></script>
+<script type="text/javascript" src="../assets/global/scripts/jquery.database.js"></script>

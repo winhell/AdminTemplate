@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/context    
+            http://www.springframework.org/schema/context/spring-context-4.0.xsd
+            http://www.springframework.org/schema/mvc     
+            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--<bean id="dataSource-mysql" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+
+        <!--<property name="url" value="jdbc:mysql://localhost/securityDB?useUnicode=true&amp;characterEncoding=utf-8" />-->
+        <!--<property name="username" value="hwh" />-->
+        <!--<property name="password" value="hwh123456" />-->
+        <!--&lt;!&ndash;<property name="url" value="jdbc:mysql://218.65.113.51/openfiredb?useUnicode=true&amp;characterEncoding=utf-8" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="username" value="root" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="password" value="332211" />&ndash;&gt;-->
+        <!--<property name="initialSize" value="10" />-->
+        <!--<property name="maxActive" value="100" />-->
+        <!--<property name="validationQuery" value="SELECT 'x'" />-->
+        <!--<property name="testWhileIdle" value="true" />-->
+        <!--<property name="testOnBorrow" value="false" />-->
+        <!--<property name="testOnReturn" value="false" />-->
+        <!--<property name="defaultAutoCommit" value="false"/>-->
+    <!--</bean>-->
+    <bean id="dataSource-mysql" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown">
+        <constructor-arg>
+            <bean class="com.zaxxer.hikari.HikariConfig">
+                <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+                <property name="jdbcUrl" value="jdbc:mysql://localhost/projMgrdb?useUnicode=true&amp;characterEncoding=utf-8"/>
+                <property name="maximumPoolSize" value="30"/>
+                <property name="autoCommit" value="false"/>
+                <property name="username" value="hwh"/>
+                <property name="password" value="hwh123456"/>
+                <property name="connectionTestQuery" value="SELECT 1"/>
+                <property name="minimumIdle" value="100"/>
+                <property name="maxLifetime" value="1800000"/>
+                <property name="idleTimeout" value="600000"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource-mysql"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQL5InnoDBDialect
+                </prop>
+
+                <prop key="hibernate.show_sql">
+                    true
+                </prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.wansan.template.model.Person</value>
+                <value>com.wansan.template.model.Role</value>
+                <value>com.wansan.template.model.UserRole</value>
+                <value>com.wansan.template.model.Resource</value>
+                <value>com.wansan.template.model.RoleResource</value>
+                <value>com.wansan.template.model.Syslog</value>
+                <value>com.wansan.template.model.Systemcode</value>
+                <value>edu.ncu.projectMgr.model.Projects</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="springFactory" class="com.wansan.template.core.SpringFactory"/>
+
+
+    <tx:advice id="smAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="tx*" propagation="REQUIRED" />  <!-- 对tx开头的方法进行事务管理  propagation="REQUIRED"如果存在一个事务，则支持当前事务。如果没有事务则开启。 -->
+            <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="smMethod"
+                      expression="execution(* com.wansan.template.service.*.*(..))|| execution(* edu.ncu.projectMgr.service.*.*(..))" />
+        <aop:advisor pointcut-ref="smMethod" advice-ref="smAdvice" />
+    </aop:config>
+    <!-- 启用注解方式 -->
+    <context:annotation-config />
+
+    <context:component-scan base-package="com.wansan.template.*,edu.ncu.projectMgr.*" />
+
+    <!-- 启用mvc注解 -->
+    <mvc:annotation-driven conversion-service="myConvertService">
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value = "text/plain;charset=UTF-8" />
+            </bean>
+        </mvc:message-converters>
+
+    </mvc:annotation-driven>
+    <bean id="myConvertService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.wansan.template.core.StringToEnumConverterFactory"/>
+            </set>
+        </property>
+    </bean>
+</beans> 
