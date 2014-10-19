@@ -2,6 +2,12 @@
  * Created by Administrator on 2014/10/11.
  */
 var TableAjax = function () {
+    var swithFormDiv = function(){
+        grid.getTableWrapper().slideToggle();
+        $('#addItemFormDiv').slideToggle();
+//        console.log($('#addItemFormDiv'));
+    };
+
     var theForm = $('#additemForm');
     var funcPrefix = theForm.data('func');
     var path = theForm.data("path");
@@ -99,7 +105,8 @@ var TableAjax = function () {
         $('#addLink').on('click',function(){                 //添加记录
             formOptions.url=path+'/add'+funcPrefix+'.action';
             $('#formTitle').html('增加项目');
-            $('#additemFormDiv').modal('show');
+//            $('#additemFormDiv').modal('show');
+            swithFormDiv();
         });
 
         $('#editLink').on('click',function(){               //编辑记录
@@ -117,7 +124,8 @@ var TableAjax = function () {
             }
 
             formOptions.url=path+'/update'+funcPrefix+'.action?id='+rowData.id;
-            $('#additemFormDiv').modal('show');
+//            $('#additemFormDiv').modal('show');
+            swithFormDiv();
         });
 
         $('#deleteLink').on('click',function(){            //删除记录
@@ -135,6 +143,9 @@ var TableAjax = function () {
                     console.log('record delete...');
                 }
             });
+        });
+        $('#closeForm').on('click',function(){
+            swithFormDiv();
         });
     };
 
