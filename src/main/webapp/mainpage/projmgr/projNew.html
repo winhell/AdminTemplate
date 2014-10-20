@@ -57,11 +57,13 @@
                     <form name="form" action="" method="POST" enctype="multipart/form-data" id="theUpload">
                         <div class="form-group">
                             <label class="control-label col-md-1">选择文件</label>
+
                             <div class="col-md-6">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="input-group">
                                         <div class="form-control uneditable-input span3" data-trigger="fileinput">
-                                            <i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename">
+                                            <i class="fa fa-file fileinput-exists"></i>&nbsp; <span
+                                                class="fileinput-filename">
 														</span>
                                         </div>
 													<span class="input-group-addon btn default btn-file">
@@ -71,7 +73,8 @@
 													修改</span>
 													<input type="file" name="uploadFile" id="uploadFile">
 													</span>
-                                        <a href="#" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">
+                                        <a href="#" class="input-group-addon btn red fileinput-exists"
+                                           data-dismiss="fileinput">
                                             取消</a>
                                     </div>
                                 </div>
@@ -83,72 +86,78 @@
                     </form>
                 </div>
                 <div class="form display-hide" id="addItemFormDiv">
-                            <form class="form" id="searchForm" method="post">
-                                <div class="form-body">
-                                    <h3 class="form-section" id="formTitle"></h3>
-                                    <div class="row">
-                                        <div class="col-md-6">
+                    <form class="form" id="addItemForm" data-path="projmgr" data-func="project" method="post">
+                        <div class="form-body">
+                            <h3 class="form-section" id="formTitle"></h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">项目名称</label>
-                                        <input id='name' type="text" name="name"  class="form-control">
+                                        <label for="name" class="control-label">项目名称</label>
+                                        <input id='name' type="text" name="name" class="form-control">
                                     </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">所属单位</label>
+                                        <label for="depart" class="control-label">所属单位</label>
                                         <input id='depart' type="text" class="form-control" name="depart">
                                     </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">项目编号</label>
-                                            <input id='registerId' type="text" class="form-control" name="registerId" placeholder="项目编号">
-                                        </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">项目负责人</label>
-                                            <input id='owner' type="text" class="form-control" name="owner" placeholder="项目负责人">
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div class="row"><div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="departType" class="control-label">单位类别</label>
-
-                                                <select id='departType' name="departType" class="form-control ajaxselect" data-options="url:'system/getCodeList.action?type=departType',defaultText:'单位类别'">
-                                                </select>
-
-                                        </div></div>
-                                        <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="projectType" class="control-label">项目类型</label>
-
-                                                <select id='projectType' name="projectType" class="form-control ajaxselect" data-options="url:'system/getCodeList.action?type=projectType',defaultText:'项目类型'">
-                                                </select>
-
-                                        </div></div>
-                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">项目经费</label>
+                                        <label class="control-label">项目编号</label>
+                                        <input id='registerId' type="text" class="form-control" name="registerId"
+                                               placeholder="项目编号">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">项目负责人</label>
+                                        <input id='owner' type="text" class="form-control" name="owner"
+                                               placeholder="项目负责人">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="departType" class="control-label">单位类别</label>
 
-                                            <input id='fee' type="text" class="form-control" name="fee" placeholder="项目经费">
+                                        <select id='departType' name="departType" class="form-control ajaxselect"
+                                                data-options="url:'system/getCodeList.action?type=departType',defaultText:'单位类别'">
+                                        </select>
 
                                     </div>
-
                                 </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn blue" id="submitForm">提交</button>
-                                    <button type="button" class="btn default" id="closeForm">关闭</button>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="projectType" class="control-label">项目类型</label>
 
+                                        <select id='projectType' name="projectType" class="form-control ajaxselect"
+                                                data-options="url:'system/getCodeList.action?type=projectType',defaultText:'项目类型'">
+                                        </select>
+
+                                    </div>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">项目经费</label>
+                                <input id='fee' type="text" class="form-control" name="fee" placeholder="项目经费">
+                            </div>
+
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn blue" id="submitForm">提交</button>
+                            <button type="button" class="btn default" id="closeForm">关闭</button>
+
+                        </div>
+                    </form>
 
 
                 </div>
-                <table class="datatable table table-striped table-bordered table-hover" id="gridtable">
+                <table class="datatable table table-striped table-bordered table-hover" data-url="projmgr/clientList.action" id="gridtable">
                     <thead>
                     <tr>
                         <th data-options="data:'id',render:checkboxRender" style="width:20px;">
@@ -170,18 +179,4 @@
 
 <link rel="stylesheet" href="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
 <script type="text/javascript" src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
-
-
-<script>
-    TableAjax.init();
-    $('#importExcel').on('click',function(){
-        var grid = TableAjax.getGrid();
-        grid.setAjaxParam("name","Huangwenhai");
-        grid.setAjaxParam("cname","黄文海");
-        grid.getDataTable().ajax.url('projmgr/clientList.action').load();
-    });
-    $('#gridtable').on('click','.btn',function(){
-        var id = $(this).parents('tr').find('input:checkbox').val();
-        alert('the id you click is '+id);
-    });
-</script>
+<script type="text/javascript" src="js/projMgr.js"></script>

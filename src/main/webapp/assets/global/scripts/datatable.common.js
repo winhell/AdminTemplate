@@ -8,20 +8,26 @@ var TableAjax = function () {
 //        console.log($('#addItemFormDiv'));
     };
 
-    var theForm = $('#additemForm');
-    var funcPrefix = theForm.data('func');
-    var path = theForm.data("path");
+    var theForm;
+    var funcPrefix;
+    var path;
     var reloadForm = function(data){
 
         if(data.status=='SUCCESS'){
-            Metronic.alert({message:data.msg,icon:"check",closeInSeconds:5});
+            Metronic.alert({
+                message:data.msg,
+                icon:"check",
+                closeInSeconds:5,
+                type:"success",
+                container:grid.getTableWrapper(),
+                place:"prepend"
+            });
             $('#additemForm').resetForm();
             $('.ajaxselect').select2('val','');
-            grid.getDataTable().ajax.reload();
-            $('#additemFormDiv').modal('hide');
+            grid.getDataTable().ajax.reload(swithFormDiv);
         }else{
             Metronic.alert({message:data.msg,icon:"warning",type:'danger'});
-            $('#additemFormDiv').modal('hide');
+            swithFormDiv();
         }
 
     };
@@ -122,7 +128,7 @@ var TableAjax = function () {
             for(var item in rowData){
                 $('#'+item).val(rowData[item]).trigger('change');
             }
-
+            $('.nochange').attr("readonly",true);
             formOptions.url=path+'/update'+funcPrefix+'.action?id='+rowData.id;
 //            $('#additemFormDiv').modal('show');
             swithFormDiv();
@@ -139,7 +145,17 @@ var TableAjax = function () {
 
             bootbox.confirm("你确定要删除所选记录吗？",function(result){
                 if(result){
-                    $.getJSON(delUrl,{idList:idList},reloadForm);
+                    $.getJSON(delUrl,{idList:idList},function(res){
+                        TableAjax.getGrid().getDataTable().ajax.reload();
+                        Metronic.alert({
+                            message:res.msg,
+                            icon:res.status=="SUCCESS"?"check":"warning",
+                            type:res.status=="SUCCESS"?"success":"danger",
+                            container:TableAjax.getGrid().getTableWrapper(),
+                            place:"prepend",
+                            closeInSeconds:5
+                        });
+                    });
                     console.log('record delete...');
                 }
             });
@@ -161,7 +177,10 @@ var TableAjax = function () {
 
         //main function to initiate the module
         init: function () {
-
+            theForm = $('#additemForm');
+            funcPrefix = theForm.data('func');
+            path = theForm.data("path");
+            theForm.ajaxForm(formOptions);
             initPickers();
             handleRecords();
             bindButtons();

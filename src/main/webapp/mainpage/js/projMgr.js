@@ -22,7 +22,7 @@ var projMgr = function(){
                 return;
             }
             if(uploadType==="excel"){
-
+                TableAjax.getGrid().getDataTable().ajax.reload();       
             }
         }
     };
@@ -40,10 +40,15 @@ var projMgr = function(){
             $('#uploadForm').slideToggle();
             uploadType = 'zip';
         });
+        $('#gridtable').on('click','.btn',function(){
+            var id = $(this).parents('tr').find('input:checkbox').val();
+            alert('the id you click is '+id);
+        });
     };
     return {
         init:function(){
             $('#theUpload').ajaxForm(uploadOpt);
+            TableAjax.init();
             handleLink();
         }
     }

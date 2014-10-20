@@ -8,6 +8,9 @@ var userMgr = function () {
     return {
         init:function(){
             TableAjax.init();
+            $('#editLink').on('click',function(){
+                $('input:password').val("");
+            });
             grid = TableAjax.getGrid();
             $('#additemForm').validate({
                 rules:{name:'required',
@@ -28,7 +31,7 @@ var userMgr = function () {
                 $.getJSON("system/setUserRoles.action",{userID:userID,idList:idList},function(jsonData){
                     bootbox.alert(jsonData.msg);
                     $('#assignRolesDiv').modal('hide');
-                    grid.getDataTable().reload();
+                    grid.getDataTable().ajax.reload();
                 })
             });
             $.getJSON('system/getAllRoles.action',function(data){

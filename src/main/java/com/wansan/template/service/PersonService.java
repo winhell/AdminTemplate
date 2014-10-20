@@ -59,8 +59,13 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
     //Todo: 添加日志信息
     @Override
     public void txUpdate(Person person,Person oper,boolean cp){
-        if(cp)
-            person.setPassword(Utils.encodePassword(person.getPassword(),person.getName()));
-        saveOrUpdate(person,false);
+        Person temp = findById(person.getId());
+        if(!"".equals(person.getPassword())){
+            if(cp)
+                temp.setPassword(Utils.encodePassword(person.getPassword(),person.getName()));
+        }
+        temp.setComment(person.getComment());
+        temp.setDepartId(person.getDepartId());
+        saveOrUpdate(temp,false);
     }
 }

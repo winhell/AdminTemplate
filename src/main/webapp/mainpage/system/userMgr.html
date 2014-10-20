@@ -74,7 +74,42 @@
                 </div>
             </div>
             <div class="portlet-body">
+                <div class="form display-hide" id="addItemFormDiv">
+                    <form class="form" id="additemForm" data-path="system" data-func="user" method="post">
+                        <div class="form-body">
+                            <h3 class="form-section" id="formTitle"></h3>
 
+                            <div class="form-group">
+                                <label for="name" class="control-label">用户名</label>
+                                <input id='name' type="text" name="name" class="form-control nochange">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="control-label">用户密码</label>
+                                <input id='password' type="password" name="password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">密码确认</label>
+                                <input id='repassword' type="password" name="repassword" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="departId" class="control-label">用户单位</label>
+                                <input id='departId' type="text" class="form-control" name="departId">
+                            </div>
+                            <div class="form-group">
+                                <label for="comment" class="control-label">用户姓名</label>
+                                <input id='comment' type="text" class="form-control" name="comment">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue" id="submitForm">提交</button>
+                            <button type="button" class="btn default" id="closeForm">关闭</button>
+
+                        </div>
+                    </form>
+
+
+                </div>
                 <table class="datatable table table-striped table-bordered table-hover" data-url="system/listuser.action" id="gridtable">
                     <thead>
                     <tr>
@@ -86,6 +121,7 @@
                         <th data-options="data:'createtime'">创建时间</th>
                         <th data-options="data:'departId'">所在单位</th>
                         <th data-options="data:'lastlogin'">最后登录时间</th>
+                        <th data-options="data:'comment'">用户姓名</th>
                         <th data-options="data:'id',render:userMgr.assignRender">操作</th>
                     </tr>
                     </thead>
@@ -95,56 +131,6 @@
     </div>
 </div>
 <!-- END PAGE CONTENT-->
-<div id="additemFormDiv" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="portlet box green">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-reorder"></i><span id="formTitle">Form Actions On Bottom</span>
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                    <!-- BEGIN FORM-->
-                    <form class="form-horizontal" id="additemForm" data-path="system" data-func="user" method="post">
-                        <div class="form-body">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">用户名</label>
-                                <div class="col-md-8">
-                                    <input id='name' type="text" name="name"  class="form-control" placeholder="用户名"></div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">用户密码</label>
-                                <div class="col-md-8">
-                                        <input id='password' type="password" name="password" class="form-control" placeholder="密码">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">用户密码</label>
-                                <div class="col-md-8">
-                                    <input id='repassword' type="password" name="repassword" class="form-control" placeholder="密码确认">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">所在部门</label>
-                                <div class="col-md-8">
-                                    <input id='departId' type="text" class="form-control" name="departId" placeholder="所在部门">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-actions fluid">
-                            <div class="col-md-offset-3 col-md-9">
-                                <button type="submit" class="btn blue" id="formSubmit">提交</button>
-                                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- END FORM-->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div id="assignRolesDiv" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
