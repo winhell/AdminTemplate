@@ -30,15 +30,10 @@ public class RoleController extends BaseController {
     @Resource
     private IResourceService resourceService;
 
-    @RequestMapping(value = "/roleMgr")
-    public String gotoMgr(){
-        return "system/roleMgr";
-    }
-
     @RequestMapping(value = "/getAllRoles")
     @ResponseBody
     public Map getRoles(){
-        List<Role> roles =  roleService.listAll();
+        List<Role> roles =  roleService.getRoleList(getLoginPerson());
         Map<String,Object> result = new HashMap<>();
         result.put("status",ResultEnum.SUCCESS);
         result.put("data",roles);

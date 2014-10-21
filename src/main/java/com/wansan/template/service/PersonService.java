@@ -6,8 +6,11 @@ import com.wansan.template.model.Person;
 import com.wansan.template.model.Syslog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,6 +21,20 @@ import java.util.List;
 @Service
 public class PersonService extends BaseDao<Person> implements IPersonService {
     private Log log = LogFactory.getLog(this.getClass());
+    @Resource
+    private IRoleService roleService;
+
+    public List<Person> getUserList(Person person){
+        String roles = roleService.getRolesByUserID(person.getId());
+        if(roles.contains("super"))
+            return listAll();
+        else{
+            String hql = "from Person where id not in (select userid from UserRole where roleid = 'super')";
+            Query query = getSession().createQuery(hql);
+            return query.list();
+        }
+    }
+
     @Override
     public Person findPersonByName(String username) {
         List<Person> persons = findByProperty("name",username);
@@ -66,6 +83,7 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
         }
         temp.setComment(person.getComment());
         temp.setDepartId(person.getDepartId());
-        saveOrUpdate(temp,false);
+        temp.setLastlogin(person.getLastlogin());
+        saveOrUpdate(temp, false);
     }
 }

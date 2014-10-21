@@ -1,9 +1,12 @@
 package com.wansan.template.service;
 
 import com.wansan.template.model.CodeEnum;
+import com.wansan.template.model.Person;
 import com.wansan.template.model.Systemcode;
+import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +47,16 @@ public class SystemcodeService extends BaseDao<Systemcode> implements ISystemcod
         if(list.size()>0)
             return list.get(0).getCode();
         return -1;
+    }
+
+    @Override
+    public Serializable txSave(Systemcode systemcode,Person person){
+        String hql = "select max(code) from Systemcode where type = :type";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("type",systemcode.getType());
+        Integer codeInsert = (Integer)query.list().get(0);
+        systemcode.setCode(null==codeInsert?1:codeInsert+1);
+        return save(systemcode);
     }
 
     @Override

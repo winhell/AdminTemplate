@@ -32,7 +32,7 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/listuser")
     public Map getUserList(){
         Map<String,Object> result = new HashMap<>();
-        result.put("data",personService.listAll());
+        result.put("data",personService.getUserList(getLoginPerson()));
         result.put("status",ResultEnum.SUCCESS);
         return result;
     }

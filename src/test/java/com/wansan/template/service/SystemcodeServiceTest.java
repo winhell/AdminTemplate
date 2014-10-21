@@ -1,6 +1,7 @@
 package com.wansan.template.service;
 
 import com.wansan.template.model.CodeEnum;
+import com.wansan.template.model.Systemcode;
 import com.wansan.template.test.BaseTest;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -19,4 +20,5 @@ public class SystemcodeServiceTest extends BaseTest{
         CodeEnum type = CodeEnum.sex;
         Assert.assertEquals(2,systemcodeService.getCodeList(type).size());
     }
+
 }

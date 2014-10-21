@@ -52,23 +52,15 @@
                     <form class="form" id="additemForm" data-path="system" data-func="code" method="post">
                         <div class="form-body">
                             <h3 class="form-section" id="formTitle"></h3>
-
                             <div class="form-group">
-                                <label class="control-label">字典类型</label>
+                                <label for="type" class="control-label">字典类型</label>
                                 <select id='type' name="type" class="form-control ajaxselect" data-options="url:'system/getCodeTypeList.action',isMap:true">
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">字典代码</label>
-
-                                <input id='code' type="text" name="code" class="form-control">
-
-                            </div>
+                                <input id='code' type="hidden" name="code">
                             <div class="form-group">
                                 <label class="control-label">条目名称</label>
-
                                 <input id='name' type="text" class="form-control" name="name">
-
                             </div>
                         </div>
                         <div class="form-actions">

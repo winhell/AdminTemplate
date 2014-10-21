@@ -8,53 +8,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "user_role")
-public class UserRole {
-    private String id;
-    private String name;
-    private Timestamp createtime;
-    private String comment;
+public class UserRole extends BasePojo{
+
     private String userid;
     private String roleid;
 
-    @Id
-    @Column(name = "id")
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Basic
-    @Column(name = "createtime")
-    public Timestamp getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Timestamp createtime) {
-        this.createtime = createtime;
-    }
-
-    @Basic
-    @Column(name = "comment")
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     @Basic
     @Column(name = "userid")

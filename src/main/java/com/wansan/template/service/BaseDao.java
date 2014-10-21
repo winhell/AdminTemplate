@@ -359,7 +359,7 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
         Syslog syslog = new Syslog();
         syslog.setUserid(oper.getName());
         syslog.setName(OperEnum.DELETE.toString());
-        syslog.setComment("用户"+oper.getName()+"批量删除"+className+":"+idList);
+        syslog.setComment("用户"+oper.getName()+"删除"+className);
         syslog.setCreatetime(Utils.getNow());
         syslog.setId(Utils.getNewUUID());
         getSession().save(syslog);

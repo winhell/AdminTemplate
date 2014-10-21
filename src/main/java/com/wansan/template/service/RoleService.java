@@ -4,6 +4,7 @@ import com.wansan.template.core.Utils;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.Role;
 import com.wansan.template.model.UserRole;
+import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -60,4 +61,13 @@ public class RoleService extends BaseDao<Role> implements IRoleService {
 
     }
 
+    public List<Role> getRoleList(Person person){
+        String userRoleIDs = getRolesByUserID(person.getId());
+        if(userRoleIDs.contains("super"))
+            return listAll();
+        else {
+            Query query = getSession().createQuery("from Role where id <> 'super'");
+            return query.list();
+        }
+    }
 }
