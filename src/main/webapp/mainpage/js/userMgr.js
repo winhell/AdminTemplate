@@ -5,13 +5,39 @@ var userMgr = function () {
 
     var userID;
     var grid;
+    var handleLink = function(){
+        $('#assignButton').click(function(){
+            var roleids = [];
+            $('.roleList').each(function(){
+                if($(this).attr('checked')==="checked")
+                    roleids.push($(this).val());
+            });
+            var idList = roleids.join(",");
+            $.getJSON("system/setUserRoles.action",{userID:userID,idList:idList},function(jsonData){
+                bootbox.alert(jsonData.msg);
+                $('#assignRolesDiv').modal('hide');
+                grid.getDataTable().ajax.reload();
+            })
+        });
+        $('#editLink').on('click',function(){
+            $('input:password').val("");
+        });
+        $('#gridtable').on('click','.changelock',function(){
+            var id = $(this).parents('tr').find('input:checkbox').val();
+            bootbox.confirm("确定要改变该用户的锁定状态吗？",function(yes){
+                    if(yes){
+                        $.get('system/changeUserlock.action',{id:id},function(){
+                            grid.getDataTable().ajax.reload();
+                        });
+                    }
+            });
+        });
+    };
     return {
         init:function(){
             TableAjax.init();
-            $('#editLink').on('click',function(){
-                $('input:password').val("");
-            });
             grid = TableAjax.getGrid();
+            handleLink();
             $('#additemForm').validate({
                 rules:{name:'required',
                     password:'required',
@@ -21,19 +47,17 @@ var userMgr = function () {
                     }
                 }
             });
-            $('#assignButton').click(function(){
-                var roleids = [];
-                $('.roleList').each(function(){
-                    if($(this).attr('checked')==="checked")
-                        roleids.push($(this).val());
-                });
-                var idList = roleids.join(",");
-                $.getJSON("system/setUserRoles.action",{userID:userID,idList:idList},function(jsonData){
-                    bootbox.alert(jsonData.msg);
-                    $('#assignRolesDiv').modal('hide');
-                    grid.getDataTable().ajax.reload();
-                })
-            });
+//            $('.changelock').on('click',function(){
+//                var id = $(this).parents('tr').find('input:checkbox').val();
+//                bootbox.confirm("确定要改变用户"+id+"的锁定状态吗？",function(yes){
+//                    if(yes){
+//                        $.get('system/changeUserlock.action',{id:id},function(){
+//                            grid.getDataTable().ajax.reload();
+//                        });
+//                    }
+//                });
+//            });
+
             $.getJSON('system/getAllRoles.action',function(data){
                 $('.checkbox-list').empty();
                 $.each(data.data,function(index,item){
@@ -60,6 +84,13 @@ var userMgr = function () {
         },
         assignRender:function(data){
             return '<a href="javascript:userMgr.assignRoles(\''+data+'\');" class="btn btn-xs purple"> 分配角色</a>';
+        },
+        lockRender:function(data){
+            if(data){
+                return '<a href="javascript:;" class="btn btn-xs red changelock"><i class="fa fa-lock"></i>已被锁定</a>';
+            }else{
+                return '<a href="javascript:;" class="btn btn-xs green changelock"><i class="fa fa-unlock"></i>正常</a>';
+            }
         }
     }
 }();

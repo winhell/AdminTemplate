@@ -1,5 +1,6 @@
 package com.wansan.template.service;
 
+import com.wansan.template.model.AccountStatusEnum;
 import com.wansan.template.model.Person;
 
 import java.io.Serializable;
@@ -12,4 +13,5 @@ public interface IPersonService extends IBaseDao<Person> {
     public List<Person> getUserList(Person person);
     public Person findPersonByName(String username);
     public void txUpdate(Person person,Person oper,boolean cp);
+    public void txChangeStatus(AccountStatusEnum statusType,String id);
 }

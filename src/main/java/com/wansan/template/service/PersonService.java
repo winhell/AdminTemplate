@@ -1,6 +1,7 @@
 package com.wansan.template.service;
 
 import com.wansan.template.core.Utils;
+import com.wansan.template.model.AccountStatusEnum;
 import com.wansan.template.model.OperEnum;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.Syslog;
@@ -85,5 +86,26 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
         temp.setDepartId(person.getDepartId());
         temp.setLastlogin(person.getLastlogin());
         saveOrUpdate(temp, false);
+    }
+
+    public void txChangeStatus(AccountStatusEnum statusType,String id){
+        String hql = "update Person set ";
+        switch (statusType){
+            case enable:
+                hql += "enable = not enable ";
+                break;
+            case locked:
+                hql += "locked = not locked ";
+                break;
+            case expired:
+                hql += "expired = not expired ";
+                break;
+            default:
+                break;
+        }
+        hql += "where id=:userID";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("userID",id);
+        query.executeUpdate();
     }
 }

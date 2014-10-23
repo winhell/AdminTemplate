@@ -1,5 +1,6 @@
 package com.wansan.template.controller;
 
+import com.wansan.template.model.AccountStatusEnum;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.ResultEnum;
 import com.wansan.template.service.IPersonService;
@@ -104,5 +105,10 @@ public class UserController extends BaseController{
             logger.error(e.getMessage());
         }
         return result;
+    }
+
+    @RequestMapping(value = "/changeUserlock")
+    public void changeLock(String id){
+        personService.txChangeStatus(AccountStatusEnum.locked,id);
     }
 }
