@@ -89,22 +89,23 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
     }
 
     public void txChangeStatus(AccountStatusEnum statusType,String id){
-        String hql = "update Person set ";
+        String hql = "update person set ";
         switch (statusType){
             case enable:
-                hql += "enable = not enable ";
+                hql += "enable = NOT enable ";
                 break;
             case locked:
-                hql += "locked = not locked ";
+                hql += "locked = NOT locked ";
                 break;
             case expired:
-                hql += "expired = not expired ";
+                hql += "expired = NOT expired ";
                 break;
             default:
                 break;
         }
         hql += "where id=:userID";
-        Query query = getSession().createQuery(hql);
+//        Query query = getSession().createQuery(hql);
+        Query query = getSession().createSQLQuery(hql);
         query.setParameter("userID",id);
         query.executeUpdate();
     }

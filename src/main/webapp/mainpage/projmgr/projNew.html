@@ -56,7 +56,7 @@
                 <div class="form display-hide" id="uploadForm">
                     <form name="form" action="" method="POST" enctype="multipart/form-data" id="theUpload">
                         <div class="form-group">
-                            <label class="control-label col-md-1">选择文件</label>
+                            <label class="control-label col-md-2">选择文件</label>
 
                             <div class="col-md-6">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -79,14 +79,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <button type="submit" class="btn green" id="uploadBtn">上传</button>
+                                <button type="button" class="btn default" id="cancelUpload">取消</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="form display-hide" id="addItemFormDiv">
-                    <form class="form" id="addItemForm" data-path="projmgr" data-func="project" method="post">
+                    <form class="form" id="additemForm" enctype="multipart/form-data" data-path="projmgr" data-func="project" method="post">
                         <div class="form-body">
                             <h3 class="form-section" id="formTitle"></h3>
 
@@ -151,10 +152,26 @@
                                 <label for="partyMember" class="control-label">参与人</label>
                                 <input id='partyMember' type="text" class="form-control" name="partyMember">
                             </div>
+
+                            <div class="form-group">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+												<span class="btn green btn-file">
+												<span class="fileinput-new">
+												选择需上传的论文</span>
+												<span class="fileinput-exists">
+												Change </span>
+												<input type="file" name="article" id="article">
+												</span>
+												<span class="fileinput-filename">
+												</span>
+                                    &nbsp; <a href="#" class="close fileinput-exists" data-dismiss="fileinput">
+                                </a>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-actions">
-                            <button type="button" class="btn blue" id="submitForm">提交</button>
+                            <button type="submit" class="btn blue" id="submitForm">提交</button>
                             <button type="button" class="btn default" id="closeForm">关闭</button>
 
                         </div>

@@ -35,7 +35,7 @@
         <constructor-arg>
             <bean class="com.zaxxer.hikari.HikariConfig">
                 <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-                <property name="jdbcUrl" value="jdbc:mysql://localhost/projMgrdb?useUnicode=true&amp;characterEncoding=utf-8"/>
+                <property name="jdbcUrl" value="jdbc:mysql://localhost/projmgrdb?useUnicode=true&amp;characterEncoding=utf-8"/>
                 <property name="maximumPoolSize" value="30"/>
                 <property name="autoCommit" value="false"/>
                 <property name="username" value="hwh"/>
