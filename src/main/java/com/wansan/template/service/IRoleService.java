@@ -14,4 +14,5 @@ public interface IRoleService extends IBaseDao<Role> {
     public void txSetRolesByUserID(String userID,String idList);
     public String getRolesByUserID(String userID);
     public List<Role> getRoleList(Person person);
+    public Boolean isUserInRole(Person person,String roleName);
 }

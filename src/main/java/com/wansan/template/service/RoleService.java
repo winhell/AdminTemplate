@@ -70,4 +70,10 @@ public class RoleService extends BaseDao<Role> implements IRoleService {
             return query.list();
         }
     }
+
+    public Boolean isUserInRole(Person person,String roleName){
+        List<Role> roles = getRoleList(person);
+        Role role = findByName(roleName).get(0);
+        return roles.contains(role);
+    }
 }

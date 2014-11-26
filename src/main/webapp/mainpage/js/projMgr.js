@@ -44,6 +44,9 @@ var projMgr = function(){
             var id = $(this).parents('tr').find('input:checkbox').val();
             alert('the id you click is '+id);
         });
+        $('#cancelUpload').on('click',function(){
+            $('#uploadForm').slideToggle();
+        })
     };
     return {
         init:function(){

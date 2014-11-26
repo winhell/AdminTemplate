@@ -19,6 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -35,32 +36,6 @@ public class ProjectController extends BaseController {
     private IProjectService projectService;
     private final static String uploadPath = "/upload/doc";
 
-    @RequestMapping(value = "/getProjectsList")
-    public Map<String,Object> getList(int page,int rows){
-        Map<String,Object> result = new HashMap<>();
-        try {
-            result = projectService.findByMap(null,page,rows,"createtime",false);
-            result.put("status",ResultEnum.SUCCESS);
-        }catch (Exception e){
-            logger.error(e.getMessage());
-            result.put("status",ResultEnum.FAIL);
-        }
-        return result;
-    }
-
-    @RequestMapping(value = "/wrapperList")
-    public Map<String,Object> wrapper(int start,int length,int draw,HttpServletRequest request){
-        Map<String,Object> temp = getList(start/length+1,length);
-        Map<String,Object> result = new HashMap<>();
-        String searchStr = request.getParameter("search[value]");
-        logger.info(searchStr);
-        result.put("recordsTotal",temp.get("total"));
-        result.put("recordsFiltered",temp.get("total"));
-        result.put("data",temp.get("rows"));
-        result.put("draw",draw);
-        return result;
-    }
-
     @RequestMapping(value = "/clientList")
     public Map<String,Object> client(){
         Map<String,Object> result = new HashMap<>();
@@ -69,7 +44,14 @@ public class ProjectController extends BaseController {
     }
 
     @RequestMapping(value = "/addproject")
-    public Map<String,Object> add(Projects projects){
+    public Map<String,Object> add(Projects projects,MultipartFile article,HttpServletRequest request) throws IOException {
+        if(null!=article){
+            String fileName = article.getOriginalFilename();
+            String extension = fileName.substring(fileName.lastIndexOf(".")).toLowerCase().substring(1);
+            String newFilename = projects.getRegisterId()+"."+extension;
+            String path = request.getServletContext().getRealPath(uploadPath);
+            article.transferTo(new File(path,newFilename));
+        }
         try {
             projectService.txSave(projects,getLoginPerson());
             return result(true);
@@ -155,6 +137,7 @@ public class ProjectController extends BaseController {
             HSSFSheet sheet = wb.getSheetAt(0);
             int rowIndex = 1;
             HSSFRow row;
+            Timestamp now = Utils.getNow();
             List<Projects> excelList = new ArrayList<>();
             while ((row=sheet.getRow(rowIndex))!=null){
                 rowIndex ++ ;
@@ -169,12 +152,13 @@ public class ProjectController extends BaseController {
                     continue;
                 Projects project = new Projects();
                 project.setId(Utils.getNewUUID());
-                project.setRegisterId(getCellText(row,1));
+                project.setRegisterId(getCellText(row, 1));
                 project.setName(row.getCell(2).getStringCellValue());
                 project.setDepart(row.getCell(3).getStringCellValue());
                 project.setOperatorId(getLoginPerson().getId());
                 project.setOwner(row.getCell(4).getStringCellValue());
-                project.setProjYear(getCellText(row,7));
+                project.setProjYear(getCellText(row, 7));
+                project.setCreatetime(now);
                 excelList.add(project);
             }
             projectService.txImportData(excelList);
@@ -196,6 +180,17 @@ public class ProjectController extends BaseController {
                 return cell.getStringCellValue();
             default:
                 return "null";
+        }
+    }
+
+    //强制把单元格转成数字
+    private Double getCellNumber(HSSFRow row,int cellNum){
+        HSSFCell cell = row.getCell(cellNum);
+        switch (cell.getCellType()){
+            case HSSFCell.CELL_TYPE_NUMERIC:
+                return cell.getNumericCellValue();
+            default:
+                return 0.0;
         }
     }
 }
