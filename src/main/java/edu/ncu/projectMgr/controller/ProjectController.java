@@ -39,7 +39,7 @@ public class ProjectController extends BaseController {
     @RequestMapping(value = "/clientList")
     public Map<String,Object> client(){
         Map<String,Object> result = new HashMap<>();
-        result.put("data",projectService.listAll());
+        result.put("data",projectService.getProjectList(getLoginPerson()));
         return result;
     }
 

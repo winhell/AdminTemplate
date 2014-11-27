@@ -34,4 +34,6 @@ public class ProjectService extends BaseDao<Projects> implements IProjectService
             return listAll();
         return findByProperty("depart",user.getDepartId());
     }
+
+
 }

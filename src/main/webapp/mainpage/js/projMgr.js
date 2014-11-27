@@ -40,10 +40,12 @@ var projMgr = function(){
             $('#uploadForm').slideToggle();
             uploadType = 'zip';
         });
-        $('#gridtable').on('click','.btn',function(){
-            var id = $(this).parents('tr').find('input:checkbox').val();
-            alert('the id you click is '+id);
-        });
+
+//     查找该行id
+//        $('#gridtable').on('click','.btn',function(){
+//            var id = $(this).parents('tr').find('input:checkbox').val();
+//            alert('the id you click is '+id);
+//        });
         $('#cancelUpload').on('click',function(){
             $('#uploadForm').slideToggle();
         })
@@ -56,4 +58,7 @@ var projMgr = function(){
         }
     }
 }();
+function downloadUrl(data, type, full){
+    return '<a href="upload/doc/' +data+ '.doc" class="btn btn-xs default"><i class="fa fa-search"></i>查看论文</a>';
+}
 projMgr.init();
