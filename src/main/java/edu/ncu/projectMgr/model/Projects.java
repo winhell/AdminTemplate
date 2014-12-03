@@ -21,6 +21,7 @@ public class Projects extends BasePojo{
     private BigDecimal fee;
     private Integer projectType;
     private Integer departType;
+    private Integer processType;
     private String partyMember;
 
     @Basic
@@ -31,6 +32,16 @@ public class Projects extends BasePojo{
 
     public void setOperatorId(String operatorId) {
         this.operatorId = operatorId;
+    }
+
+    @Basic
+    @Column(name = "processType", nullable = true, insertable = true, updatable = true, length = 36)
+    public Integer getProcessType() {
+        return processType;
+    }
+
+    public void setProcessType(Integer processType) {
+        this.processType = processType;
     }
 
     @Basic

@@ -2,7 +2,9 @@ package edu.ncu.projectMgr.controller;
 
 import com.wansan.template.controller.BaseController;
 import com.wansan.template.core.Utils;
+import com.wansan.template.model.CodeEnum;
 import com.wansan.template.model.ResultEnum;
+import com.wansan.template.service.ISystemcodeService;
 import edu.ncu.projectMgr.model.Projects;
 import edu.ncu.projectMgr.service.IProjectService;
 import org.apache.log4j.Logger;
@@ -34,6 +36,9 @@ public class ProjectController extends BaseController {
 
     @Resource
     private IProjectService projectService;
+    @Resource
+    private ISystemcodeService systemcodeService;
+
     private final static String uploadPath = "/upload/doc";
 
     @RequestMapping(value = "/clientList")
@@ -192,5 +197,10 @@ public class ProjectController extends BaseController {
             default:
                 return 0.0;
         }
+    }
+
+    private Integer getCellFormDict(HSSFCell cell,CodeEnum codeType){
+        String name = cell.getStringCellValue();
+        return systemcodeService.getCode(codeType,name);
     }
 }
