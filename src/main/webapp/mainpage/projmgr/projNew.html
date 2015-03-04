@@ -11,6 +11,16 @@
                 <i class="fa fa-angle-right"></i>
                 项目管理
             </li>
+            <li class="btn-group">
+                <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+				<span>
+					项目进度过滤
+				</span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu" id="filterList">
+                </ul>
+            </li>
         </ul>
         <!-- END PAGE TITLE & BREADCRUMB-->
     </div>
@@ -179,7 +189,7 @@
 
 
                 </div>
-                <table class="datatable table table-striped table-bordered table-hover" data-url="projmgr/clientList.action" id="gridtable">
+                <table class="datatable table table-striped table-bordered table-hover" data-url="projmgr/clientList.action?codeIndex=0" id="gridtable">
                     <thead>
                     <tr>
                         <th data-options="data:'id',render:checkboxRender" style="width:20px;">

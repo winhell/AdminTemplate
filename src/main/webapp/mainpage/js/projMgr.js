@@ -5,6 +5,16 @@ var projMgr = function(){
 
     var uploadType;
 
+    var filterHandler = function(){
+        $.getJSON("system/getCodeList.action?type=process",function(jsonData){
+            var list = "<li><a href='javascript:projMgr.filter(0);'>全部</a> </li>";
+            $.each(jsonData,function(index,item){
+                list += "<li><a href='javascript:projMgr.filter("+ item.code +");'>"+ item.name +"</a></li>";
+            });
+            $('#filterList').append(list);
+        })
+    };
+
     var uploadOpt = {
         target:'#theUpload',
         dataType:'json',
@@ -55,6 +65,11 @@ var projMgr = function(){
             $('#theUpload').ajaxForm(uploadOpt);
             TableAjax.init();
             handleLink();
+            filterHandler();
+        },
+        filter:function(index){
+            var url = "projmgr/clientList.action?codeIndex="+index;
+            TableAjax.getGrid().getDataTable().ajax.url(url).load();
         }
     }
 }();

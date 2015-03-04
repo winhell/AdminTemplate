@@ -253,10 +253,12 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
     }
 
     public List<T> findByMap(String hql,final Map<String,Object> params){
-        Query query = getSession().createQuery(hql);
-        for(String field:params.keySet())
-            query.setParameter(field,params.get(field));
-        return query.list();
+//        Query query = getSession().createQuery(hql);
+//        for(String field:params.keySet())
+//            query.setParameter(field,params.get(field));
+        Criteria criteria = getSession().createCriteria(clazz);
+        criteria.add(Restrictions.allEq(params));
+        return criteria.list();
     }
 
     public final Map<String,Object> findByMap(final Map<String,Object> params,int page,int rows,String order,boolean asc) throws HibernateException{

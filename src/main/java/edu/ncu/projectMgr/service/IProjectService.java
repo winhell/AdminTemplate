@@ -12,5 +12,5 @@ import java.util.List;
 public interface IProjectService extends IBaseDao<Projects> {
     public Boolean hasProject(String projectID);
     public void txImportData(List<Projects> list);
-    public List<Projects> getProjectList(Person user);
+    public List<Projects> getProjectList(Person user,Integer codeIndex);
 }

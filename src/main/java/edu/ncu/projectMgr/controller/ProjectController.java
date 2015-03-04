@@ -42,9 +42,10 @@ public class ProjectController extends BaseController {
     private final static String uploadPath = "/upload/doc";
 
     @RequestMapping(value = "/clientList")
-    public Map<String,Object> client(){
+    public Map<String,Object> client(Integer codeIndex){
         Map<String,Object> result = new HashMap<>();
-        result.put("data",projectService.getProjectList(getLoginPerson()));
+        result.put("result",ResultEnum.SUCCESS);
+        result.put("data",projectService.getProjectList(getLoginPerson(),codeIndex));
         return result;
     }
 
@@ -146,8 +147,8 @@ public class ProjectController extends BaseController {
             List<Projects> excelList = new ArrayList<>();
             while ((row=sheet.getRow(rowIndex))!=null){
                 rowIndex ++ ;
-                HSSFCell cell = row.getCell(1);
-                String registerID = cell.getStringCellValue();
+//                HSSFCell cell = row.getCell(1);
+                String registerID = getCellText(row,1);
                 if(null==registerID||"".equals(registerID)){
                     json.put("status",ResultEnum.FAIL);
                     json.put("msg","文件中包含无效的项目编号，导入中断！");
@@ -162,6 +163,9 @@ public class ProjectController extends BaseController {
                 project.setDepart(row.getCell(3).getStringCellValue());
                 project.setOperatorId(getLoginPerson().getId());
                 project.setOwner(row.getCell(4).getStringCellValue());
+                project.setProjectType(getCellFormDict(row.getCell(6),CodeEnum.projectType));
+                project.setDepartType(getCellFormDict(row.getCell(8),CodeEnum.departType));
+                project.setProcessType(getCellFormDict(row.getCell(9),CodeEnum.process));
                 project.setProjYear(getCellText(row, 7));
                 project.setCreatetime(now);
                 excelList.add(project);
@@ -199,6 +203,7 @@ public class ProjectController extends BaseController {
         }
     }
 
+    //在字典表中查找单元格内容并转化
     private Integer getCellFormDict(HSSFCell cell,CodeEnum codeType){
         String name = cell.getStringCellValue();
         return systemcodeService.getCode(codeType,name);
