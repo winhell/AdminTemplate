@@ -100,7 +100,7 @@
                     <form class="form" id="additemForm" enctype="multipart/form-data" data-path="projmgr" data-func="project" method="post">
                         <div class="form-body">
                             <h3 class="form-section" id="formTitle"></h3>
-
+                            <input type="hidden" id="projYear" name="projYear"/>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -137,7 +137,7 @@
                                         <label for="departType" class="control-label">单位类别</label>
 
                                         <select id='departType' name="departType" class="form-control ajaxselect"
-                                                data-options="url:'system/getCodeList.action?type=departType',defaultText:'单位类别'">
+                                                data-options="url:'system/getCodeList.action?type=departType',valueField:'code',defaultText:'单位类别'">
                                         </select>
 
                                     </div>
@@ -147,17 +147,30 @@
                                         <label for="projectType" class="control-label">项目类型</label>
 
                                         <select id='projectType' name="projectType" class="form-control ajaxselect"
-                                                data-options="url:'system/getCodeList.action?type=projectType',defaultText:'项目类型'">
+                                                data-options="url:'system/getCodeList.action?type=projectType',valueField:'code',defaultText:'项目类型'">
                                         </select>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">项目经费</label>
-                                <input id='fee' type="text" class="form-control" name="fee">
-                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fee" class="control-label">项目经费</label>
+                                    <input id='fee' type="text" class="form-control" name="fee">
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="processType" class="control-label">项目进度</label>
 
+                                        <select id='processType' name="processType" class="form-control ajaxselect"
+                                                         data-options="url:'system/getCodeList.action?type=process',valueField:'code',defaultText:'项目进度'">
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="partyMember" class="control-label">参与人</label>
                                 <input id='partyMember' type="text" class="form-control" name="partyMember">
@@ -200,6 +213,7 @@
                         <th data-options="data:'projYear'">立项年份</th>
                         <th data-options="data:'depart'">所在单位</th>
                         <th data-options="data:'registerId',render:downloadUrl">查看论文</th>
+                        <th data-options="data:'processName'">进度</th>
                     </tr>
                     </thead>
                 </table>

@@ -1,6 +1,9 @@
 package edu.ncu.projectMgr.model;
 
+import com.wansan.template.core.SpringFactory;
 import com.wansan.template.model.BasePojo;
+import com.wansan.template.model.CodeEnum;
+import com.wansan.template.service.ISystemcodeService;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -24,6 +27,7 @@ public class Projects extends BasePojo{
     private Integer processType;
     private String partyMember;
 
+    private static ISystemcodeService service=null;
     @Basic
     @Column(name = "operatorID", nullable = true, insertable = true, updatable = true, length = 36)
     public String getOperatorId() {
@@ -42,6 +46,13 @@ public class Projects extends BasePojo{
 
     public void setProcessType(Integer processType) {
         this.processType = processType;
+    }
+
+    @Transient
+    public String getProcessName(){
+        if(service==null)
+            service = (ISystemcodeService) SpringFactory.getBean("systemcodeService");
+        return service.getCodeString(CodeEnum.process,processType);
     }
 
     @Basic

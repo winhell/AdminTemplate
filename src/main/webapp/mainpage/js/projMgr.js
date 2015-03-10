@@ -4,9 +4,11 @@
 var projMgr = function(){
 
     var uploadType;
+    var processList;
 
     var filterHandler = function(){
         $.getJSON("system/getCodeList.action?type=process",function(jsonData){
+            processList = jsonData;
             var list = "<li><a href='javascript:projMgr.filter(0);'>全部</a> </li>";
             $.each(jsonData,function(index,item){
                 list += "<li><a href='javascript:projMgr.filter("+ item.code +");'>"+ item.name +"</a></li>";
@@ -70,10 +72,14 @@ var projMgr = function(){
         filter:function(index){
             var url = "projmgr/clientList.action?codeIndex="+index;
             TableAjax.getGrid().getDataTable().ajax.url(url).load();
+        },
+        getList:function(){
+            return processList;
         }
     }
 }();
 function downloadUrl(data, type, full){
     return '<a href="upload/doc/' +data+ '.doc" class="btn btn-xs default"><i class="fa fa-search"></i>查看论文</a>';
 }
+
 projMgr.init();
